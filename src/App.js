@@ -131,7 +131,7 @@ const regions = [
       forecolor: '#ABABAB',
       backcolor: '#CECECE',
       can_dbl_click: 0,
-      dblclick_fontstyle: 'font-weight:800'
+      dblclick_fontstyle: 'fontWeight:800'
     }
   }
 ]
@@ -140,7 +140,6 @@ function App() {
   const [date, setDate] = useState(new Date());
   const [data, setData] = useState([]);
   const [pos, setPos] = useState(0);
-  const [font, setFont] = useState(0);
   const file = useRef(null);
 
   const handleFiles = () => {
@@ -185,6 +184,7 @@ function App() {
     let p = data.findIndex(l => differenceInDays(l.x, date) >= 0);
     setPos(p);
     console.log(p);
+    // eslint-disable-next-line
   }, [date])
 
   return (
@@ -228,23 +228,9 @@ function App() {
                 value={item.latestData.price}
                 border={index === regions.length - 1 ? false : true}
                 date={item.latestData.date}
-                fontWeight={font}
-                oneClick={() => {
-                  if (Object.entries(item.latestData).length !== 0) {
-                    item.history.push(item.latestData);
-                    console.log(item.history);
-                    item.latestData.is_dblclicked = false
-                  }
-                }
-                }
-                doubleClick={
-                  () => {
-                    if (Object.entries(item.latestData).length !== 0) {
-                      setFont(item.config.dblclick_fontstyle);
-                      console.log("Double click");
-                    }
-                  }
-                }
+                fontWeight={item.config.dblclick_fontstyle}
+                latestData={item.latestData}
+                history={item.history}
               />
             ))
           }
